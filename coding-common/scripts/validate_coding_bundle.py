@@ -2,7 +2,7 @@
 from pathlib import Path
 import re, sys
 
-root = Path(__file__).resolve().parents[2]
+root = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else Path(__file__).resolve().parents[2]
 refs_dir = root / 'coding-common' / 'references'
 errors = []
 
@@ -113,6 +113,16 @@ for ref in all_refs:
         errors.append(f'empty reference: {ref.name}')
     if not text.lstrip().startswith('#'):
         errors.append(f'{ref.name} missing top-level heading')
+
+
+orch = refs_dir / 'orchestrator-workflows.md'
+if orch.exists():
+    orch_text = orch.read_text()
+    for term in ['Browser-visible bug to fix','Design handoff to React implementation','Contract drift across backend/frontend','Migration/backend/frontend coordinated change','Review-only coding work','Coding handoff package','Gate proof rule','Degraded complete output']:
+        if term not in orch_text:
+            errors.append(f'orchestrator-workflows.md missing sentinel {term}')
+else:
+    errors.append('missing orchestrator-workflows.md')
 
 word_count = sum(len(p.read_text(errors='ignore').split()) for p in root.rglob('*.md') if '.git' not in p.parts)
 if word_count > MAX_TOTAL_MD_WORDS:

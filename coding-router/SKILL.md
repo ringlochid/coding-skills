@@ -11,11 +11,13 @@ Read first:
 - `../coding-common/references/workflow-contract.md`
 - `../coding-common/references/routing-matrix.md`
 - `../coding-common/references/karpathy-coding-rules.md`
+- `../coding-common/references/orchestrator-workflows.md`
 
 Workflow:
 1. Identify the user's real first need: reproduce, orchestrate, implement, review, test, security, release, contract, migration, or handoff.
 2. Route to exactly one first skill unless the user explicitly asks for parallel outputs.
-3. If scope is already obvious, skip this router and use the focused skill directly.
+3. For broad multi-layer work, accepted design-handoff implementation, or scoped work that needs implementation plus browser QA/review gates, route to `engineering-fix-orchestrator` as the WBS phase playbook. If evidence/root cause is unclear, route first to `bug-triage` or `browser-repro-triage`.
+4. If scope is already obvious, skip this router and use the focused skill directly.
 
 Tie-breaks:
 - browser evidence before backend speculation
